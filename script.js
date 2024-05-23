@@ -1,7 +1,7 @@
-//your JS code here. If required.
 // script.js
 document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('.btn');
+    const audioContainer = document.getElementById('audio-container');
     let currentAudio = null;
 
     buttons.forEach(button => {
@@ -20,7 +20,16 @@ document.addEventListener('DOMContentLoaded', () => {
             currentAudio.pause();
             currentAudio.currentTime = 0;
         }
-        currentAudio = new Audio(`./sounds/${sound}.mp3`);
+
+        let audioElement = document.getElementById(`audio-${sound}`);
+        if (!audioElement) {
+            audioElement = document.createElement('audio');
+            audioElement.id = `audio-${sound}`;
+            audioElement.src = `./sounds/${sound}.mp3`;
+            audioContainer.appendChild(audioElement);
+        }
+
+        currentAudio = audioElement;
         currentAudio.play();
     }
 
